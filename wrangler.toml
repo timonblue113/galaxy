@@ -1,0 +1,29 @@
+name = "atimis-api"
+main = "worker.js"
+compatibility_date = "2025-01-01"
+# Ép Worker chạy ở Mỹ vì Gemini API không hỗ trợ lời gọi từ Việt Nam
+[placement]
+region = "gcp:us-east4"
+[triggers]
+crons = ["* * * * *"]
+[[d1_databases]]
+binding = "DB"
+database_name = "atimis"
+database_id = "e6245a87-2175-41e2-83d5-b33282475e04"
+[vars]
+BANK = "MB"
+ACC = "0946296269"
+ACC_NAME = "BUI VAN UT"
+# --- Hỏi phi hành gia (Gemini) ---
+# Domain được phép gọi /api/ask, cách nhau bằng dấu phẩy. SỬA thành domain thật của trang.
+ALLOWED_ORIGIN = "https://timonblue113.github.io"
+GEMINI_MODEL = "gemini-3.5-flash-lite"
+ASK_PER_MIN = "6"      # mỗi IP tối đa bao nhiêu câu/phút
+ASK_PER_DAY = "2000"   # tổng toàn trang/ngày, chặn bị tính tiền quá tay
+# KHÔNG ghi key vào đây. Lưu bí mật bằng:  npx wrangler secret put GEMINI_API_KEY
+# --- Chơi miễn phí + ủng hộ tự nguyện ---
+FREE_PER_HOUR = "2"        # mỗi IP giữ tối đa bao nhiêu ghế/giờ (chống spam)
+RESCUE_COOLDOWN = "300"    # giây nghỉ giữa 2 lần giải cứu của cùng 1 IP
+DONATE_GOAL = "300000"     # mục tiêu quỹ máy chủ/tháng (đ), hiện thanh tiến trình
+PASS_MIN = "20000"         # ủng hộ tối thiểu để nhận mã Chỉ huy (đ)
+
